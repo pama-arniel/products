@@ -1,5 +1,12 @@
 <template>
 <section id="app" class="text-gray-600 body-font">
+  <EditProduct
+    :product="selectedProductToEdit"
+    :showModal="showModal"
+    @close-modal="showModal=false"
+    @saved-edit="saveEdit"
+  />
+
   <!-- the search bar -->
   <div class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
     <div class="md:flex">
@@ -27,6 +34,7 @@
         v-for="(product, index) in filteredProductsList"
         :key="'product-' + index"
         :product="product"
+        @edit-product="editProduct(product, index)"
       />
     </div>
   </div>
@@ -40,26 +48,45 @@
 import productsJSON from './assets/products_list.json'
 
 import Product from './components/Product.vue'
+import EditProduct from './components/EditProduct.vue'
+
 
 export default {
   name: 'App',
   components: {
-    Product
+    Product,
+    EditProduct
   },
   data() {
     return {
       products: productsJSON.list,
-      product: {
-        name: "Geneva Project",
-        price: 18.0,
-        image_src: "https://dummyimage.com/420x260"
-      },
+
+      // for search bar
       typing: "",
       searchKey: "",
+
+      // for edit
+      showModal: false,
+      selectedProductToEdit: {},
+      indexOfEditedProduct: null,
+
+      // for displayed products
       filteredProductsList: productsJSON.list
     };
   },
   methods: {
+    editProduct(product, index){
+      this.showModal = true;
+      this.selectedProductToEdit = product;
+      this.indexOfEditedProduct = index;
+    },
+
+    saveEdit(newProduct){
+      this.selectedProductToEdit = {... newProduct};
+      this.products[this.indexOfEditedProduct] = {... newProduct};
+      this.showModal = false;
+    },
+
     debounceSearch(event) {
       let newSearchKey = event.target.value;
       this.typing = newSearchKey ? "Typing..." : "";
