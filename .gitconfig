@@ -1,0 +1,5 @@
+[user]
+	email = "pamajosearniel@gmail.com"
+	name = "Jose Arniel Pama"
+[core]
+	sshCommand = "ssh -i ~/.ssh/github"
