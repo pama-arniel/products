@@ -49,7 +49,7 @@
   <!-- the add button -->
   <button
     v-if="!typing"
-    class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 sm:px-6 border-b-4 border-gray-700 hover:border-purple-500 rounded fixed right-2 sm:right-4 sm:bottom-10 bottom-5 z-10">
+    class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 sm:px-6 border-b-2 border-gray-700 hover:border-purple-500 rounded fixed right-2 sm:right-4 sm:bottom-10 bottom-5 z-10">
     Add
   </button>
 </section>
