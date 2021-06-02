@@ -14,7 +14,7 @@
     <div class="md:flex">
       <div class="w-full p-3 mt-3">
           <div class="relative space-x-4">
-            <input @input="debounceSearch" type="text" class="bg-gray-50 border h-14 w-full px-6 rounded-lg focus:outline-none hover:cursor-pointer" placeholder="Search by name or price...">
+            <input @input="debounceSearch" type="text" class="bg-gray-50 border-2 h-14 w-full px-6 rounded-lg focus:outline-none hover:cursor-pointer" placeholder="Search by name or price...">
             <button class="outline-none focus:outline-none absolute top-4 right-5 border-l pl-4">
               <svg class="w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -146,7 +146,7 @@ export default {
     triggerDeleteProduct(indexInFilteredList, productToDelete){
       this.$toasted.show("Are you sure you want to delete this product?", { 
         theme: "toasted-primary", 
-        position: "top-center", 
+        position: "bottom-center",
         duration : null,
         className: "notif-alert",
         action : [
@@ -190,7 +190,7 @@ export default {
     showNotif(notifType, messageText){
       this.$toasted.show(messageText, {
         theme: "bubble",
-        position: "top-center",
+        position: "bottom-center",
         duration : 3000,
         type: notifType,
         className: "notif-alert"
@@ -259,5 +259,6 @@ export default {
 
 .notif-alert{
   font-family: Arial, Helvetica, sans-serif;
+  align-items: center;
 }
 </style>
