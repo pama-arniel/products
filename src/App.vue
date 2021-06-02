@@ -191,7 +191,7 @@ export default {
       this.$toasted.show(messageText, {
         theme: "bubble",
         position: "top-center",
-        duration : 5000,
+        duration : 3000,
         type: notifType,
         className: "notif-alert"
       });
