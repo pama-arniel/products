@@ -19,7 +19,10 @@
                   <!-- image -->
                   <div class="flex flex-wrap justify-center">
                      <div class="w-auto m-4">
-                        <div v-if="typingImageUrl" class="text-center w-full py-6">
+                        <div v-if="!shallowProductCopy.image_src" class="text-center w-full py-6">
+                            <p class="mx-auto leading-relaxed text-base text-gray-500">No image link.</p>
+                        </div>
+                        <div v-else-if="typingImageUrl" class="text-center w-full py-6">
                             <p class="mx-auto leading-relaxed text-base text-gray-500">{{typingImageUrl}}</p>
                         </div>
                         <div v-else-if="errorMessage" class="text-center w-full py-6">
@@ -58,7 +61,7 @@
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 >
                                 <input
-                                    v-else v-model="shallowProductCopy[keyName]" type="text" required
+                                    v-else v-model="shallowProductCopy[keyName]" type="text" required maxlength="50"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 >
                               </dd>
@@ -102,23 +105,35 @@
 export default {
   name: "EditProduct",
   props: {
+    // determines if 'edit' or 'add'
+    actionType: {
+       type: String
+    },
     showModal: {
       type: Boolean,
       required: true
     },
     product: {
-       type: Object,
-       required: true,
-       default: null
+       type: Object
     }
   },
   watch: {
     showModal(value) {
         if(value){
             // refresh data when modal is showed
-            this.errorMessage = "";
-            this.typingImageUrl = "";
-            this.shallowProductCopy = Object.assign({}, this.product);
+            this.resetData();
+
+            if(this.actionType == 'edit'){
+                this.shallowProductCopy = Object.assign({}, this.product);
+            } else {
+                this.shallowProductCopy = {
+                    id: Math.random().toString(36).substring(7), // generate random id
+                    name: "",
+                    price: 0,
+                    detail: "Lorem ipsum dolor sit amet",
+                    image_src: ""
+                }
+            }
         }
     }
   },
@@ -131,6 +146,11 @@ export default {
     };
   },
   methods: {
+    resetData() {
+        this.errorMessage = "";
+        this.typingImageUrl = "";
+    },
+
     debounceImageInput(event) {
         let newImageURL = event.target.value;
         this.typingImageUrl = newImageURL ? "Typing..." : "";
@@ -143,8 +163,15 @@ export default {
     },
 
     saveChanges() {
-        this.errorMessage = "";
-        this.$emit('saved-edit', this.shallowProductCopy);
+        this.resetData();
+
+        if(this.actionType == 'edit') {
+            this.$emit('saved-edit', this.shallowProductCopy);
+        } else {
+            this.$emit('add-product', this.shallowProductCopy);
+        }
+
+        this.shallowProductCopy = {};
     },
 
     toggleModal() {

@@ -1,10 +1,12 @@
 <template>
 <section id="app" class="text-gray-600 body-font">
   <EditProduct
-    :product="selectedProductToEdit"
     :showModal="showModal"
+    :actionType="actionType"
+    :product="selectedProductToEdit"
     @close-modal="showModal=false"
     @saved-edit="saveEdit"
+    @add-product="saveNewProduct"
   />
 
   <!-- the search bar -->
@@ -28,7 +30,7 @@
   <div v-if="typing" class="flex flex-col text-center w-full pt-6 sm:pt-10">
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400">{{ this.typing }}</p>
   </div>
-  <div v-else-if="filteredProductsList.length <= 0" class="flex flex-col text-center w-full pt-6 sm:pt-10">
+  <div v-else-if="origProducts.length <= 0" class="flex flex-col text-center w-full pt-6 sm:pt-10">
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400">You have no products available.</p>
   </div>
   <div v-else-if="filteredProductsList.length > 0" class="container px-5 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
@@ -37,7 +39,7 @@
         v-for="(product, index) in filteredProductsList"
         :key="'product-' + index"
         :product="product"
-        @edit-product="editProduct(product, index)"
+        @edit-product="showEditProductModal(product, index)"
         @delete-product="deleteProduct(index, product)"
       />
     </div>
@@ -49,6 +51,7 @@
   <!-- the add button -->
   <button
     v-if="!typing"
+    @click="showAddProductModal()"
     class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 sm:px-6 border-b-2 border-gray-700 hover:border-purple-500 rounded fixed right-2 sm:right-4 sm:bottom-10 bottom-5 z-10">
     Add
   </button>
@@ -76,8 +79,11 @@ export default {
       typing: "",
       searchKey: "",
 
-      // for edit
+      // for add or edit popup
+      actionType: "",
       showModal: false,
+
+      // for edit
       selectedProductToEdit: {},
       indexOfEditedProduct: null,
 
@@ -86,14 +92,34 @@ export default {
     };
   },
   methods: {
-    editProduct(product, index){
+    showEditProductModal(product, index){
       this.showModal = true;
       this.selectedProductToEdit = product;
       this.indexOfEditedProduct = index;
+      this.actionType = 'edit';
+    },
+
+    showAddProductModal(){
+      this.showModal = true;
+      this.actionType = 'add';
+    },
+
+    saveNewProduct(newProduct){
+      // reset data
+      this.actionType = "";
+
+      // add new product to products list
+      this.origProducts.push(newProduct);
+
+      // initiate filter
+      this.initiateRefilteringOfList(this.searchKey);
+      this.showModal = false;
     },
 
     saveEdit(newProduct){
-      this.selectedProductToEdit = {... newProduct};
+      // reset data
+      this.selectedProductToEdit = {};
+      this.actionType = "";
 
       // set new value of product in filtered list
       this.filteredProductsList[this.indexOfEditedProduct] = {... newProduct};
@@ -112,6 +138,9 @@ export default {
     },
 
     deleteProduct(indexInFilteredList, productToDelete){
+      // reset data
+      this.actionType = "";
+
       // delete product in filtered list
       this.filteredProductsList.splice(indexInFilteredList, 1);
 
