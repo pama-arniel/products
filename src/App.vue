@@ -7,10 +7,14 @@
     @saved-edit="saveEdit"
   />
 
+  <button id="add-button" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 sm:px-6 border-b-4 border-gray-700 hover:border-purple-500 rounded fixed right-0 sm:bottom-10 bottom-5 z-10">
+    Add
+  </button>
+
   <!-- the search bar -->
   <div class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
     <div class="md:flex">
-      <div class="w-full p-3 mt-8">
+      <div class="w-full p-3 mt-3">
           <div class="relative space-x-4">
             <input @input="debounceSearch" type="text" class="bg-gray-50 border h-14 w-full px-6 rounded-lg focus:outline-none hover:cursor-pointer" placeholder="Search by name or price...">
             <button class="outline-none focus:outline-none absolute top-4 right-5 border-l pl-4">
@@ -28,7 +32,7 @@
   <div v-if="typing" class="flex flex-col text-center w-full pt-6 sm:pt-10">
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">{{ this.typing }}</p>
   </div>
-  <div v-else-if="filteredProductsList.length > 0" class="container px-5 sm:px-10 pt-6 sm:pt-10 pb-20 mx-auto">
+  <div v-else-if="filteredProductsList.length > 0" class="container px-5 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
     <div class="flex flex-wrap -m-4">
       <Product
         v-for="(product, index) in filteredProductsList"
