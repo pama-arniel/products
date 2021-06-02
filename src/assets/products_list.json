@@ -3,71 +3,71 @@
         {
             "name": "Product 1",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/220/200/150"
         },
         {
             "name": "Product 2",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/221/200/150"
         },
         {
             "name": "Product 3",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/222/200/150"
         },
         {
             "name": "Product 4",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/223/200/150"
         },{
             "name": "Product 5",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/225/200/150"
         },
         {
             "name": "Product 6",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/233/200/150"
         },
         {
             "name": "Product 7",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/227/200/150"
         },
         {
             "name": "Product 8",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/228/200/150"
         },
         {
             "name": "Product 9",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/229/200/150"
         },
         {
             "name": "Product 10",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/230/200/150"
         },{
             "name": "Product 11",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/231/200/150"
         },
         {
             "name": "Product 12",
             "detail": "Lorem ipsum dolor sit amet",
-            "price": 100,
+            "price": "100.0",
             "image_src": "https://picsum.photos/id/232/200/150"
         }
     ]
