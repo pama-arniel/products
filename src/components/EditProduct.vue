@@ -124,7 +124,7 @@ export default {
   },
   data() {
     return {
-       keysToHide: ['detail'],
+       keysToHide: ['detail', 'id'],
        shallowProductCopy: {},
        errorMessage: "",
        typingImageUrl: ""

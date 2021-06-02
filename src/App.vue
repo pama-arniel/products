@@ -35,7 +35,7 @@
         :key="'product-' + index"
         :product="product"
         @edit-product="editProduct(product, index)"
-        @delete-product="deleteProduct(index)"
+        @delete-product="deleteProduct(index, product)"
       />
     </div>
   </div>
@@ -84,12 +84,36 @@ export default {
 
     saveEdit(newProduct){
       this.selectedProductToEdit = {... newProduct};
-      this.filteredProductsList[this.indexOfEditedProduct] = {... newProduct}; // TODO: must find item in orig products list and update also
+
+      // set new value of product in filtered list
+      this.filteredProductsList[this.indexOfEditedProduct] = {... newProduct};
+
+      // find product index via product.id in orig products list
+      let indexInOrigList = this.origProducts.findIndex(function(item){
+        return item.id === newProduct.id
+      });
+
+      // if id index found, update product in original list
+      if(indexInOrigList > -1){
+        this.origProducts[indexInOrigList] = {... newProduct};
+      }
+
       this.showModal = false;
     },
 
-    deleteProduct(index){
-      this.filteredProductsList.splice(index, 1); // TODO: must find item in orig products list and update also
+    deleteProduct(indexInFilteredList, productToDelete){
+      // delete product in filtered list
+      this.filteredProductsList.splice(indexInFilteredList, 1);
+
+      // find product index via product.id in orig products list
+      let indexInOrigList = this.origProducts.findIndex(function(item){
+        return item.id === productToDelete.id
+      });
+
+      // delete if id index found
+      if(indexInOrigList > -1){
+        this.origProducts.splice(indexInOrigList, 1);
+      }
     },
 
     debounceSearch(event) {
