@@ -17,12 +17,12 @@
     </div>
   </div>
 
-  <!-- the product grids -->
+  <!-- the products grid -->
   <div class="container px-5 sm:px-10 pt-6 sm:pt-10 pb-20 mx-auto">
     <div class="flex flex-wrap -m-4">
       <Product
-        v-for="i in 16"
-        :key="'product-' + i"
+        v-for="(product, index) in products"
+        :key="'product-' + index"
         :product="product"
       />
     </div>
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import productsJSON from './assets/products_list.json'
+
 import Product from './components/Product.vue'
 
 export default {
@@ -40,11 +42,12 @@ export default {
   },
   data() {
     return {
-        product: {
-            name: "Geneva Project",
-            price: 18.0,
-            image_src: "https://dummyimage.com/420x260"
-        }
+      products: productsJSON.list,
+      product: {
+        name: "Geneva Project",
+        price: 18.0,
+        image_src: "https://dummyimage.com/420x260"
+      }
     };
   },
 }
