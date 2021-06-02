@@ -19,8 +19,16 @@
                   <!-- image -->
                   <div class="flex flex-wrap justify-center">
                      <div class="w-auto m-4">
+                        <div v-if="loadingImageMessage" class="text-center w-full py-6">
+                            <p class="mx-auto leading-relaxed text-base text-gray-500">{{loadingImageMessage}}</p>
+                        </div>
+                        <div v-else-if="errorMessage" class="text-center w-full py-6">
+                            <p class="mx-auto leading-relaxed text-base text-gray-500">{{errorMessage}}</p>
+                        </div>
                         <img
-                            loading="lazy" :src="shallowProductCopy.image_src" :alt="shallowProductCopy.name"
+                            v-else
+                            @error="errorMessage = 'Image is not loaded. Try a new image link.';"
+                            loading="lazy" :src="shallowProductCopy.image_src" alt="Product image"
                             class="shadow rounded max-w-full h-auto align-middle border-none"
                         />
                      </div>
@@ -40,7 +48,11 @@
                               </dt>
                               <dd class="mt-1 text-gray-500 sm:mt-0 sm:col-span-2">
                                 <input
-                                    v-model="shallowProductCopy[keyName]" :type="getType(keyName)" required
+                                    v-if="keyName == 'image_src'" @input="debounceImageInput" v-model="shallowProductCopy.image_src"  type="url" required
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                >
+                                <input
+                                    v-else v-model="shallowProductCopy[keyName]" :type="getType(keyName)" required
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 >
                               </dd>
@@ -93,11 +105,25 @@ export default {
   data() {
     return {
        keysToHide: ['detail'],
-       shallowProductCopy: {}
+       shallowProductCopy: {},
+       errorMessage: "",
+       loadingImageMessage: ""
     };
   },
   methods: {
+    debounceImageInput(event) {
+        let newImageURL = event.target.value;
+        this.loadingImageMessage = newImageURL ? "Loading image..." : "";
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+            this.loadingImageMessage = "";
+            this.shallowProductCopy.image_src = newImageURL;
+            this.errorMessage = "";
+        }, 600);
+    },
+
     saveChanges() {
+        this.errorMessage = "";
         this.$emit('saved-edit', this.shallowProductCopy);
     },
 
