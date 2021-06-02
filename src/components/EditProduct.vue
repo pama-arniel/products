@@ -52,7 +52,13 @@
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 >
                                 <input
-                                    v-else v-model="shallowProductCopy[keyName]" :type="getType(keyName)" required
+                                    v-else-if="keyName == 'price'" v-model="shallowProductCopy.price"
+                                    type="number" placeholder="0.00" required name="price" min="0" value="0" step="0.01" title="Price" pattern="^\d+(?:\.\d{1,2})?$"
+                                    onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                >
+                                <input
+                                    v-else v-model="shallowProductCopy[keyName]" type="text" required
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 >
                               </dd>
@@ -147,27 +153,16 @@ export default {
 
     formatKeyName(keyName) {
        if(keyName == 'name'){
-          return '💼 Product Name:';
+          return '🏷️  Product Name:';
        } else if(keyName == 'price'){
-          return '🌐 Price:';
+          return '💰  Price ($):';
        } else if(keyName == 'image_src'){
-          return '⚙️ Image link:';
+          return '📷  Image link:';
        } else if(keyName == 'detail'){
-          return '🎨 Details:';
+          return '🎨  Details:';
        }
        return keyName;
-    },
-
-    getType(keyName) {
-       if(keyName == 'name'){
-          return 'text';
-       } else if(keyName == 'price'){
-          return 'number';
-       } else if(keyName == 'image_src'){
-          return 'url';
-       }
-       return 'text';
-    },
+    }
   }
 }
 </script>
