@@ -1,5 +1,5 @@
 <template>
-<section id="app" class="text-gray-600 body-font bg-gray-200 h-screen">
+<section id="app" class="text-gray-600 body-font bg-gray-200 h-full">
   <!-- the search bar -->
   <div class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
     <div class="md:flex">
