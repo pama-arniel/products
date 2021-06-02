@@ -7,10 +7,6 @@
     @saved-edit="saveEdit"
   />
 
-  <button id="add-button" class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 sm:px-6 border-b-4 border-gray-700 hover:border-purple-500 rounded fixed right-0 sm:bottom-10 bottom-5 z-10">
-    Add
-  </button>
-
   <!-- the search bar -->
   <div class="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
     <div class="md:flex">
@@ -32,6 +28,9 @@
   <div v-if="typing" class="flex flex-col text-center w-full pt-6 sm:pt-10">
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">{{ this.typing }}</p>
   </div>
+  <div v-else-if="filteredProductsList.length <= 0" class="flex flex-col text-center w-full pt-6 sm:pt-10">
+    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">You have zero products available.</p>
+  </div>
   <div v-else-if="filteredProductsList.length > 0" class="container px-5 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
     <div class="flex flex-wrap -m-4">
       <Product
@@ -46,6 +45,13 @@
   <div v-else class="flex flex-col text-center w-full pt-6 sm:pt-10">
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">Your search did not match any documents.</p>
   </div>
+
+  <!-- the add button -->
+  <button
+    v-if="!typing"
+    class="bg-purple-500 hover:bg-purple-400 text-white font-bold py-2 px-4 sm:px-6 border-b-4 border-gray-700 hover:border-purple-500 rounded fixed right-2 sm:bottom-10 bottom-5 z-10">
+    Add
+  </button>
 </section>
 </template>
 
