@@ -1,6 +1,6 @@
 <template>
 <div class="overflow-hidden rounded-2xl h-90 m-auto lg:w-1/4 md:w-1/2 p-4 w-full product-card scale-on-hover">
-    <img :alt="product.name" :src="product.image_src" class="rounded-t-lg object-cover object-center w-full h-full block"/>
+    <img loading="lazy" :alt="product.name" :src="product.image_src" class="rounded-t-lg object-cover object-center w-full h-full block"/>
     <div class="bg-white w-full p-4 relative rounded-b-lg">
         <button aria-label="Edit product details" type="button" class="absolute rounded-full bg-indigo-500 text-white w-10 h-10 right-2 -top-6 sm:hidden">
             <svg width="6" height="6" fill="currentColor" class="h-5 w-5 text-white mx-auto" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
