@@ -82,7 +82,7 @@
                   <!-- disable button when there are errors -->
                   <button
                     v-if="typingImageUrl || errorMessage || !shallowProductCopy.image_src"
-                    :disabled="typingImageUrl || errorMessage"
+                    :disabled="typingImageUrl || errorMessage || !shallowProductCopy.image_src"
                     title="Make sure the image link is valid"
                     class="text-gray-500 disabled:opacity-50 font-bold uppercase px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-not-allowed">
                     Save Changes
