@@ -254,7 +254,8 @@ export default {
 
 <style>
 #app {
-  background-color: #000;
+  background: linear-gradient(90deg, #000 21px, transparent 1%) center, linear-gradient(#000 21px, transparent 1%) center, #a799cc;
+  background-size: 22px 22px;
   height: 100%;
 }
 
