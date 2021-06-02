@@ -121,7 +121,7 @@ export default {
       if(!searchKey){
         return true;
       } else {
-        let keysToSkip = ['details', 'image_src'];
+        let keysToSkip = ['details', 'image_src', 'id'];
 
         // iterate the key-value pairs of the item and
         // determine if the search term is found in one of them
