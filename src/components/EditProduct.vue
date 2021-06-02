@@ -19,8 +19,8 @@
                   <!-- image -->
                   <div class="flex flex-wrap justify-center">
                      <div class="w-auto m-4">
-                        <div v-if="loadingImageMessage" class="text-center w-full py-6">
-                            <p class="mx-auto leading-relaxed text-base text-gray-500">{{loadingImageMessage}}</p>
+                        <div v-if="typingImageUrl" class="text-center w-full py-6">
+                            <p class="mx-auto leading-relaxed text-base text-gray-500">{{typingImageUrl}}</p>
                         </div>
                         <div v-else-if="errorMessage" class="text-center w-full py-6">
                             <p class="mx-auto leading-relaxed text-base text-gray-500">{{errorMessage}}</p>
@@ -69,9 +69,18 @@
                     class="text-red-500 bg-transparent hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                     Cancel
                   </button>
+
+                  <!-- disable button when there are errors -->
                   <button
-                    type="submit"
-                    class="text-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 font-bold uppercase px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                    v-if="typingImageUrl || errorMessage"
+                    type="submit" :disabled="typingImageUrl || errorMessage"
+                    title="Make sure the image link is valid"
+                    class="text-gray-500 disabled:opacity-50 font-bold uppercase px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-not-allowed">
+                    Save Changes
+                  </button>
+                  <button
+                    v-else type="submit"
+                    class="text-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 disabled:opacity-50 font-bold uppercase px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                     Save Changes
                   </button>
                </div>
@@ -98,8 +107,13 @@ export default {
     }
   },
   watch: {
-    product() {
-        this.shallowProductCopy = Object.assign({}, this.product);
+    showModal(value) {
+        if(value){
+            // refresh data when modal is showed
+            this.errorMessage = "";
+            this.typingImageUrl = "";
+            this.shallowProductCopy = Object.assign({}, this.product);
+        }
     }
   },
   data() {
@@ -107,16 +121,16 @@ export default {
        keysToHide: ['detail'],
        shallowProductCopy: {},
        errorMessage: "",
-       loadingImageMessage: ""
+       typingImageUrl: ""
     };
   },
   methods: {
     debounceImageInput(event) {
         let newImageURL = event.target.value;
-        this.loadingImageMessage = newImageURL ? "Loading image..." : "";
+        this.typingImageUrl = newImageURL ? "Typing..." : "";
         clearTimeout(this.debounce);
         this.debounce = setTimeout(() => {
-            this.loadingImageMessage = "";
+            this.typingImageUrl = "";
             this.shallowProductCopy.image_src = newImageURL;
             this.errorMessage = "";
         }, 600);
