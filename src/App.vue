@@ -40,7 +40,7 @@
         :key="'product-' + index"
         :product="product"
         @edit-product="showEditProductModal(product, index)"
-        @delete-product="deleteProduct(index, product)"
+        @delete-product="triggerDeleteProduct(index, product)"
       />
     </div>
   </div>
@@ -137,7 +137,29 @@ export default {
       this.showModal = false;
     },
 
-    deleteProduct(indexInFilteredList, productToDelete){
+    triggerDeleteProduct(indexInFilteredList, productToDelete){
+      this.$toasted.show("Are you sure you want to delete this product?", { 
+        theme: "toasted-primary", 
+        position: "top-center", 
+        duration : null,
+        action : [
+            {
+                text : 'Cancel',
+                onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                }
+            },
+            {
+                text : 'Continue',
+                onClick: (e, toastObject) => {
+                  this.deleteProduct(indexInFilteredList, productToDelete, toastObject);
+                }
+            }
+        ]
+      });
+    },
+
+    deleteProduct(indexInFilteredList, productToDelete, toastObject){
       // reset data
       this.actionType = "";
 
@@ -153,6 +175,9 @@ export default {
       if(indexInOrigList > -1){
         this.origProducts.splice(indexInOrigList, 1);
       }
+
+      // remove toast
+      toastObject.goAway(0);
     },
 
     debounceSearch(event) {
