@@ -1,7 +1,7 @@
 <template>
    <div class="body-font p-2">
       <div
-         v-if="showModal && product"
+         v-if="showModal && shallowProductCopy"
          class="overflow-x-hidden fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
          >
          <div class="relative w-auto m-3 w-2xl lg:w-7/12 max-h-screen overflow-y-auto">
