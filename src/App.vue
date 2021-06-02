@@ -1,5 +1,5 @@
 <template>
-<section id="app" class="text-gray-600 body-font">
+<section id="app" class="text-gray-600 body-font h-screen">
   <EditProduct
     :showModal="showModal"
     :actionType="actionType"
@@ -27,13 +27,13 @@
   </div>
 
   <!-- the products grid -->
-  <div v-if="typing" class="flex flex-col text-center w-full pt-6 sm:pt-10">
-    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400">{{ this.typing }}</p>
+  <div v-if="typing" class="flex flex-col text-center h-screen w-full pt-6 sm:pt-10">
+    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">{{ this.typing }}</p>
   </div>
-  <div v-else-if="origProducts.length <= 0" class="flex flex-col text-center w-full pt-6 sm:pt-10">
-    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400">You have no products available.</p>
+  <div v-else-if="origProducts.length <= 0" class="flex flex-col text-center h-screen w-full pt-6 sm:pt-10">
+    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">You have no products available.</p>
   </div>
-  <div v-else-if="filteredProductsList.length > 0" class="container px-5 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
+  <div v-else-if="filteredProductsList.length > 0" class="container min:h-screen max:h-full px-5 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
     <div class="flex flex-wrap -m-4">
       <Product
         v-for="(product, index) in filteredProductsList"
@@ -44,8 +44,8 @@
       />
     </div>
   </div>
-  <div v-else class="flex flex-col text-center w-full pt-6 sm:pt-10">
-    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400">Your search did not match any documents.</p>
+  <div v-else class="flex flex-col text-center h-screen w-full pt-6 sm:pt-10">
+    <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">Your search did not match any documents.</p>
   </div>
 
   <!-- the add button -->
@@ -254,7 +254,8 @@ export default {
 
 <style>
 #app {
-  background-color: #fff;
+  background-color: coral;
+  height: 100%;
 }
 
 .notif-alert{
