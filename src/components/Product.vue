@@ -1,5 +1,5 @@
 <template>
-<div class="overflow-hidden rounded-2xl h-90 m-auto lg:w-1/4 md:w-1/2 p-4 w-full product-card scale-on-hover">
+<div class="overflow-hidden rounded-2xl h-90 lg:w-1/4 md:w-1/2 p-4 w-full product-card scale-on-hover">
     <div class="relative">
       <img loading="lazy" :alt="product.name" :src="product.image_src" class="rounded-t-lg object-cover object-center w-full h-full block"/>
       <button @click="$emit('delete-product')" class="modal-close absolute top-0 right-0 align-middle cursor-pointer flex flex-col items-center mt-4 mr-4 text-white z-50 rounded-full bg-black opacity-50 p-2 sm:hidden">
