@@ -35,6 +35,7 @@
         :key="'product-' + index"
         :product="product"
         @edit-product="editProduct(product, index)"
+        @delete-product="deleteProduct(index)"
       />
     </div>
   </div>
@@ -59,7 +60,7 @@ export default {
   },
   data() {
     return {
-      products: productsJSON.list,
+      origProducts: productsJSON.list,
 
       // for search bar
       typing: "",
@@ -83,8 +84,12 @@ export default {
 
     saveEdit(newProduct){
       this.selectedProductToEdit = {... newProduct};
-      this.products[this.indexOfEditedProduct] = {... newProduct};
+      this.filteredProductsList[this.indexOfEditedProduct] = {... newProduct}; // TODO: must find item in orig products list and update also
       this.showModal = false;
+    },
+
+    deleteProduct(index){
+      this.filteredProductsList.splice(index, 1); // TODO: must find item in orig products list and update also
     },
 
     debounceSearch(event) {
@@ -101,7 +106,7 @@ export default {
     },
 
     initiateRefilteringOfList(searchKey){
-      this.filteredProductsList = this.filterListBySearchKey(productsJSON.list, searchKey);
+      this.filteredProductsList = this.filterListBySearchKey(this.origProducts, searchKey);
     },
 
     filterListBySearchKey(origList, searchKey){
