@@ -33,7 +33,7 @@
   <div v-else-if="origProducts.length <= 0" class="flex flex-col text-center h-screen w-full pt-6 sm:pt-10">
     <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">You have no products available.</p>
   </div>
-  <div v-else-if="filteredProductsList.length > 0" class="container h-auto min-h-screen px-5 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
+  <div v-else-if="filteredProductsList.length > 0" class="container h-auto min-h-screen px-8 sm:px-10 pt-6 sm:pt-10 pb-10 mx-auto">
     <div class="flex flex-wrap -m-4">
       <Product
         v-for="(product, index) in filteredProductsList"
@@ -254,7 +254,7 @@ export default {
 
 <style>
 #app {
-  background-color: coral;
+  background-color: #000;
   height: 100%;
 }
 
