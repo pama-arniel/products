@@ -114,6 +114,9 @@ export default {
       // initiate filter
       this.initiateRefilteringOfList(this.searchKey);
       this.showModal = false;
+
+      // show save successful
+      this.showNotif("success", "Successfully added a new product!");
     },
 
     saveEdit(newProduct){
@@ -135,6 +138,9 @@ export default {
       }
 
       this.showModal = false;
+
+      // show save successful
+      this.showNotif("success", "Changes to product details are saved!");
     },
 
     triggerDeleteProduct(indexInFilteredList, productToDelete){
@@ -142,6 +148,7 @@ export default {
         theme: "toasted-primary", 
         position: "top-center", 
         duration : null,
+        className: "notif-alert",
         action : [
             {
                 text : 'Cancel',
@@ -178,6 +185,16 @@ export default {
 
       // remove toast
       toastObject.goAway(0);
+    },
+
+    showNotif(notifType, messageText){
+      this.$toasted.show(messageText, {
+        theme: "bubble",
+        position: "top-center",
+        duration : 5000,
+        type: notifType,
+        className: "notif-alert"
+      });
     },
 
     debounceSearch(event) {
@@ -238,5 +255,9 @@ export default {
 <style>
 #app {
   background-color: #fff;
+}
+
+.notif-alert{
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>
