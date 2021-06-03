@@ -71,6 +71,9 @@ export default {
   },
   data() {
     return {
+      // for filtered list
+      filteredProductsList: {},
+
       // for search bar
       typing: "",
       searchKey: "",
@@ -84,9 +87,11 @@ export default {
       indexOfEditedProduct: null
     };
   },
+  created() {
+    this.filteredProductsList = this.origProducts;
+  },
   computed: mapState({
-    origProducts: state => state.products.origProducts,
-    filteredProductsList: state => state.products.filteredProductsList
+    origProducts: state => state.products.origProducts
   }),
   methods: {
     showEditProductModal(product, index){
@@ -106,7 +111,7 @@ export default {
       this.actionType = "";
 
       // add new product to products list
-      this.origProducts.push(newProduct);
+      this.$store.commit('addNewProductToOriginalList', newProduct);
 
       // initiate filter
       this.initiateRefilteringOfList(this.searchKey);
@@ -124,16 +129,10 @@ export default {
       // set new value of product in filtered list
       this.filteredProductsList[this.indexOfEditedProduct] = {... newProduct};
 
-      // find product index via product.id in orig products list
-      let indexInOrigList = this.origProducts.findIndex(function(item){
-        return item.id === newProduct.id
-      });
+      // update original list in vuex store
+      this.$store.commit('saveEditedProductToOriginalList', newProduct);
 
-      // if id index found, update product in original list
-      if(indexInOrigList > -1){
-        this.origProducts[indexInOrigList] = {... newProduct};
-      }
-
+      // close modal
       this.showModal = false;
 
       // show save successful
@@ -170,15 +169,8 @@ export default {
       // delete product in filtered list
       this.filteredProductsList.splice(indexInFilteredList, 1);
 
-      // find product index via product.id in orig products list
-      let indexInOrigList = this.origProducts.findIndex(function(item){
-        return item.id === productToDelete.id
-      });
-
-      // delete if id index found
-      if(indexInOrigList > -1){
-        this.origProducts.splice(indexInOrigList, 1);
-      }
+      // update original list in vuex store
+      this.$store.commit('deleteProductFromOriginalList', productToDelete);
 
       // remove toast
       toastObject.goAway(0);
@@ -208,8 +200,7 @@ export default {
     },
 
     initiateRefilteringOfList(searchKey){
-      let filteredResult = this.filterListBySearchKey(this.origProducts, searchKey);
-      this.$store.commit('updateFilteredProducts', filteredResult);
+      this.filteredProductsList = this.filterListBySearchKey(this.origProducts, searchKey);
     },
 
     filterListBySearchKey(origList, searchKey){
