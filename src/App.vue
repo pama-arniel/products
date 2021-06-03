@@ -59,11 +59,9 @@
 </template>
 
 <script>
-import productsJSON from './assets/products_list.json'
-
 import Product from './components/Product.vue'
 import EditProduct from './components/EditProduct.vue'
-
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -73,8 +71,6 @@ export default {
   },
   data() {
     return {
-      origProducts: productsJSON.list,
-
       // for search bar
       typing: "",
       searchKey: "",
@@ -85,12 +81,13 @@ export default {
 
       // for edit
       selectedProductToEdit: {},
-      indexOfEditedProduct: null,
-
-      // for displayed products
-      filteredProductsList: productsJSON.list
+      indexOfEditedProduct: null
     };
   },
+  computed: mapState({
+    origProducts: state => state.products.origProducts,
+    filteredProductsList: state => state.products.filteredProductsList
+  }),
   methods: {
     showEditProductModal(product, index){
       this.showModal = true;
@@ -211,7 +208,8 @@ export default {
     },
 
     initiateRefilteringOfList(searchKey){
-      this.filteredProductsList = this.filterListBySearchKey(this.origProducts, searchKey);
+      let filteredResult = this.filterListBySearchKey(this.origProducts, searchKey);
+      this.$store.commit('updateFilteredProducts', filteredResult);
     },
 
     filterListBySearchKey(origList, searchKey){
