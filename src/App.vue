@@ -132,7 +132,8 @@ export default {
       // update original list in vuex store
       this.$store.commit('saveEditedProductToOriginalList', newProduct);
 
-      // close modal
+      // initiate filter
+      this.initiateRefilteringOfList(this.searchKey);
       this.showModal = false;
 
       // show save successful
